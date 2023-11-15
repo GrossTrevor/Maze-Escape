@@ -48,14 +48,12 @@ int traverse(std::vector<std::string> &graph) {
     int x = 0, y = 0;
     bool pushed = false;
     queue<pair<int, int>> q;
-    vector<pair<int, int>> v;
     map<pair<int, int>, int> m;
 
     for (int i = 0; i < graph.size(); i++)
         for (int j = 0; j < graph[i].length(); j++) 
             m[make_pair(i, j)] = 10001;
 
-    v.push_back(make_pair(0, 0));
     q.push(make_pair(0, 0));
     m[make_pair(0, 0)] = 0;
 
@@ -64,60 +62,63 @@ int traverse(std::vector<std::string> &graph) {
         y = q.front().first;
         q.pop();
 
-        v.push_back(make_pair(y, x));
-
-        if (x - 1 >= 0 && find(v.begin(), v.end(), make_pair(y, x - 1)) == v.end()) {
+        if (x - 1 >= 0 && m[make_pair(y, x - 1)] == 10001) {
             if (graph[y][x - 1] == '.') {
                 q.push(make_pair(y, x - 1));
-                if (m[make_pair(y, x - 1)] > m[make_pair(y, x)]++) {
-                    m[make_pair(y, x - 1)] = m[make_pair(y, x)]++;
+                if (m[make_pair(y, x - 1)] > m[make_pair(y, x)] + 1) {
+                    m[make_pair(y, x - 1)] = m[make_pair(y, x)] + 1;
                 }
             }
-            else if(graph[y][x - 1] == 't')
-                if (m[make_pair(y, x - 1)] > m[make_pair(y, x)]++) {
-                    m[make_pair(y, x - 1)] = m[make_pair(y, x)]++;
+            else if (graph[y][x - 1] == 't') {
+                if (m[make_pair(y, x - 1)] > m[make_pair(y, x)] + 1) {
+                    m[make_pair(y, x - 1)] = m[make_pair(y, x)] + 1;
                 }
+            }
         }
 
-        if (x + 1 < graph[y].length() && find(v.begin(), v.end(), make_pair(y, x + 1)) == v.end()) {
+        if (x + 1 < graph[y].length() && m[make_pair(y, x + 1)] == 10001) {
             if (graph[y][x + 1] == '.') {
                 q.push(make_pair(y, x + 1));
-                if (m[make_pair(y, x + 1)] > m[make_pair(y, x)]++) {
-                    m[make_pair(y, x + 1)] = m[make_pair(y, x)]++;
+                if (m[make_pair(y, x + 1)] > m[make_pair(y, x)] + 1) {
+                    m[make_pair(y, x + 1)] = m[make_pair(y, x)] + 1;
                 }
             }
-            else if (graph[y][x + 1] == 't')
-                if (m[make_pair(y, x + 1)] > m[make_pair(y, x)]++) {
-                    m[make_pair(y, x + 1)] = m[make_pair(y, x)]++;
+            else if (graph[y][x + 1] == 't') {
+                if (m[make_pair(y, x + 1)] > m[make_pair(y, x)] + 1) {
+                    m[make_pair(y, x + 1)] = m[make_pair(y, x)] + 1;
                 }
+            }
         }
 
-        if (y - 1 >= 0 && find(v.begin(), v.end(), make_pair(y - 1, x)) == v.end()) {
+        if (y - 1 >= 0 && m[make_pair(y - 1, x)] == 10001) {
             if (graph[y - 1][x] == '.') {
                 q.push(make_pair(y - 1, x));
-                if (m[make_pair(y - 1, x)] > m[make_pair(y, x)]++) {
-                    m[make_pair(y - 1, x)] = m[make_pair(y, x)]++;
+                if (m[make_pair(y - 1, x)] > m[make_pair(y, x)] + 1) {
+                    m[make_pair(y - 1, x)] = m[make_pair(y, x)] + 1;
                 }
             }
-            else if (graph[y - 1][x] == 't')
-                if (m[make_pair(y - 1, x)] > m[make_pair(y, x)]++) {
-                    m[make_pair(y - 1, x)] = m[make_pair(y, x)]++;
+            else if (graph[y - 1][x] == 't') {
+                if (m[make_pair(y - 1, x)] > m[make_pair(y, x)] + 1) {
+                    m[make_pair(y - 1, x)] = m[make_pair(y, x)] + 1;
                 }
+            }
         }
 
-        if (y + 1 < graph.size() && find(v.begin(), v.end(), make_pair(y + 1, x)) == v.end()) {
+        if (y + 1 < graph.size() && m[make_pair(y + 1, x)] == 10001) {
             if (graph[y + 1][x] == '.') {
                 q.push(make_pair(y + 1, x));
-                if (m[make_pair(y + 1, x)] > m[make_pair(y, x)]++) {
-                    m[make_pair(y + 1, x)] = m[make_pair(y, x)]++;
+                if (m[make_pair(y + 1, x)] > m[make_pair(y, x)] + 1) {
+                    m[make_pair(y + 1, x)] = m[make_pair(y, x)] + 1;
                 }
-			}
-            else if (graph[y + 1][x] == 't')
-                if (m[make_pair(y + 1, x)] > m[make_pair(y, x)]++) {
-                    m[make_pair(y + 1, x)] = m[make_pair(y, x)]++;
+            }
+            else if (graph[y + 1][x] == 't') {
+                if (m[make_pair(y + 1, x)] > m[make_pair(y, x)] + 1) {
+                    m[make_pair(y + 1, x)] = m[make_pair(y, x)] + 1;
                 }
+            }
         }
     }
+
     if(m[make_pair(graph.size() - 1, graph[0].length() - 1)] != 10001)
 		return m[make_pair(graph.size() - 1, graph[0].length() - 1)];
 	return -1;
